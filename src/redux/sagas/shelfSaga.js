@@ -2,7 +2,7 @@ import {put, takeEvery, call} from 'redux-saga/effects';
 import axios from 'axios';
 
 
-function* getitems() {
+function* getItems() {
     try {
         const itemsResponse = yield call(axios.get, '/api/shelf');
         yield put({type: 'SET_ITEMS', payload: itemsResponse.data});

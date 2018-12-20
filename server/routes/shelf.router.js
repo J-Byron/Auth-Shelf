@@ -27,7 +27,19 @@ router.get('/', (req, res) => {
  * Add an item for the logged in user to the shelf
  */
 router.post('/', (req, res) => {
+    console.log(req.user);
+    if(req.isAuthenticated()){
+       const queryString = `INSERT INTO item (description,image_url,person_id) VALUES ($1,$2,$3);`; 
+       const values = [req.body.description, req.body.image, req.user.id];
 
+       pool.query(queryString,values).then(result =>{
+        res.sendStatus(204);
+       }).catch(err =>{
+        res.sendStatus(500)
+       })
+    }else{
+        res.sendStatus(403)
+    }
 });
 
 

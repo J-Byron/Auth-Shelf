@@ -17,9 +17,13 @@ class Shelf extends Component {
     
   }
 
+  deleteItem = (item) => {
+    this.props.dispatch({type: 'DELETE_ITEMS', payload: item.id})
+  }
+
   render() {
     let display = this.props.reduxStore.shelfReducer.map(item => {
-      return <li key={item.id}><img style={imgStyles} src={item.image_url}/><p>{item.description}</p></li>
+      return <li key={item.id}><img style={imgStyles} src={item.image_url}/><p>{item.description}</p><button onClick={() => this.deleteItem(item)}>Delete</button></li>
     })
     return(
       <ul>

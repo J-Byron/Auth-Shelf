@@ -1,6 +1,9 @@
 const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
+const { rejectUnauthenticated } = require('../modules/authentication-middleware');
+
+
 
 
 /**
@@ -46,8 +49,20 @@ router.post('/', (req, res) => {
 /**
  * Delete an item if it's something the logged in user added
  */
-router.delete('/:id', (req, res) => {
-
+router.delete('/:id', rejectUnauthenticated, (req, res) => {
+    // if(req.isAuthenticated()){
+        let id = req.params.id;
+        const queryString = 'DELETE FROM "item" WHERE "id" = $1;';
+        pool.query(queryString, [id])
+        .then(result => {
+            res.sendStatus(204)
+        })
+        .catch(error => {
+            res.sendStatus(500)
+        })
+    // } else {
+        // res.sendStatus(403);
+    // } 
 });
 
 

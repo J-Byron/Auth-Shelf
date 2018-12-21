@@ -27,11 +27,20 @@ function* postItem (action) {
 }
 
 
-
+function* deleteItems(action) {
+    try {
+        console.log('deleting action', action.payload);
+        yield call(axios.delete, `/api/shelf/${action.payload}`);
+        yield dispatch({type: 'FETCH_ITEMS'});
+    } catch(error) {
+        console.log('error in delete saga:', error);
+    }
+}
 
 function* shelfSaga() {
        yield takeEvery('FETCH_ITEMS', getItems);
        yield takeEvery('POST_ITEM', postItem);
+       yield takeEvery('DELETE_ITEMS', deleteItems);
 }
 
 

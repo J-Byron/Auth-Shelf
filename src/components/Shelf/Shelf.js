@@ -24,7 +24,6 @@ class Shelf extends Component {
     return(
       <ul>
         {display}
-        {/* {JSON.stringify(this.props.reduxStore.shelfReducer)} */}
       </ul>
     )
   }
